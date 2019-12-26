@@ -8,8 +8,8 @@
  * @完成时间   2019年12月
  */
  
-#ifndef _LPC546XX_FXOS8700_H
-#define _LPC546XX_FXOS8700_H
+#ifndef __LPC546XX_FXOS8700_H
+#define __LPC546XX_FXOS8700_H
 
 #include "headfile.h"
 

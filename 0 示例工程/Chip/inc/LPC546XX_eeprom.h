@@ -36,26 +36,26 @@
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM读取一个字(4个字节)
 //  @param      type        写入EEPROM的页 一页可写32个uint32类型数据
-//  @param      offset      需要写入的数据的地址 
+//  @param      offset      需要写入的数据的偏移字(32位)
 //  @return     读取的内容
 //  Sample usage:            uint32 test = EEPROM_READ_WORD(uint32,0);  读取偏移0  类型为uint32
 //  @note                    
 //-------------------------------------------------------------------------------------------------------------------
-#define EEPROM_READ_WORD(type,offset)    (*(type *)(EEPROM_BASE_ADDRESS + ((offset<EEPROM_OFFSET_MAX?offset:0)*4)))
+#define eeprom_read_word(pageNumber, offset, type)     (*(type *)((uint32)((EEPROM_BASE_ADDRESS + ((offset<EEPROM_OFFSET_MAX?offset:0)*4)+pageNumber*EEPROM_PAGE_SIZE))))
 
 //-------------------------------------------------------------------------------------------------------------------
-//  @brief      EEPROM读取一个字(4个字节)
+//  @brief      EEPROM读取数据
 //  @param      SectorNum   数据所在的EEPROM页数
 //  @param      type        写入EEPROM的页 一页可写32个uint32类型数据
-//  @param      offset      该数据在当前页数的偏移字节数
+//  @param      offset      该数据在当前页数的偏移字节数(8位)
 //  @return     读取的内容
-//  Sample usage:            uint32 test = eeprom_read(0, 0, uint32);  读取偏移0  类型为uint32
+//  Sample usage:            int16 test = eeprom_read(0, 0, int16);  读取偏移0  类型int16
 //  @note                    by @llm
 //-------------------------------------------------------------------------------------------------------------------
 #define eeprom_read(sectorNum, offset, type)        (*(type *)(EEPROM_BASE_ADDRESS + sectorNum * EEPROM_PAGE_SIZE + offset))
 
 void eeprom_init(void);
-void eeprom_write_word(uint16 offset, uint32 *data);
+void eeprom_write_word(uint16 pageNumber, int16 offset, uint32 data);
 void eeprom_write_page(uint16 pagenum, uint32 *data);
 
 

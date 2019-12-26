@@ -40,6 +40,7 @@
 #include "LPC546XX_eeprom.h"
 #include "LPC546XX_mrt.h"
 
+#include "LPC546XX_mcp41.h"
 #include "LPC546XX_oled.h"
 #include "LPC546XX_myspi.h"
 

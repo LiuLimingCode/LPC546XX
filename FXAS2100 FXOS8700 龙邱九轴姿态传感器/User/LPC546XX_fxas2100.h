@@ -5,8 +5,8 @@
  * @完成时间   2019年12月
  */
  
-#ifndef _LPC546XX_FXAS2100_H
-#define _LPC546XX_FXAS2100_H
+#ifndef __LPC546XX_FXAS2100_H
+#define __LPC546XX_FXAS2100_H
 
 #include "headfile.h"
 

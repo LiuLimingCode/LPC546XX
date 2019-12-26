@@ -58,22 +58,21 @@ void eeprom_init(void)
 
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM写入一个字(4个字节)
-//  @param      offset       写入EEPROM的地址偏移量
+//  @param      pageNumber   写入EEPROM的页 一页可写32个uint32类型数据
+//  @param      offset       写入EEPROM的地址偏移字节
 //  @param      *data        需要写入数据地址
 //  @return     void
-//  Sample usage:            eeprom_write_word(0,12345); 数据12345写入到偏移量为0的EEPROM区域
+//  Sample usage:            eeprom_write_word(0, 0,12345); 数据12345写入到偏移量为0的EEPROM区域
 //-------------------------------------------------------------------------------------------------------------------
-void eeprom_write_word(uint16 offset, uint32 *data)
+void eeprom_write_word(uint16 pageNumber, int16 offset, uint32 data)
 {
     uint32 *addr;
 
     if (offset >= EEPROM_OFFSET_MAX)    ASSERT(0);
-    
-    offset *= 4;
     if(EEPROM->AUTOPROG)    EEPROM->AUTOPROG = 1;           //设置自动编程
     EEPROM->INTSTATCLR = EEPROM_INTENSET_PROG_SET_EN_MASK;  //清除标志位
-    addr = (uint32 *)(EEPROM_BASE_ADDRESS + offset);        //计算地址
-    *addr = *data;                                           //写入数据
+    addr = (uint32 *)(EEPROM_BASE_ADDRESS + pageNumber * EEPROM_PAGE_SIZE + offset * 4);//计算地址
+    *addr = data;                                           //写入数据
     if(0x01 != EEPROM->AUTOPROG)                            //检验是否需要手动清除
     {
         EEPROM->CMD = EEPROM_PROGRAM_CMD;
@@ -83,22 +82,22 @@ void eeprom_write_word(uint16 offset, uint32 *data)
 
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM写入一个字(4个字节)
-//  @param      pagenum      写入EEPROM的页 一页可写32个uint32类型数据
+//  @param      pageNumber      写入EEPROM的页 一页可写32个uint32类型数据
 //  @param      *data        需要写入的数据的地址 
 //  @return     void
 //  Sample usage:            uint32 dat[32];  eeprom_write_page(0,dat); 将dat数组的内容全部写入EEPROM的第0页
 //  @note                    定义数组 数组元素务必为32个 避免出现数组越界访问
 //-------------------------------------------------------------------------------------------------------------------
-void eeprom_write_page(uint16 pagenum, uint32 *data)
+void eeprom_write_page(uint16 pageNumber, uint32 *data)
 {
     uint8 i;
     uint32 *addr;
 
-    if (pagenum >= EEPROM_PAGE_COUNT || !data)    ASSERT(0);
+    if (pageNumber >= EEPROM_PAGE_COUNT || !data)    ASSERT(0);
 
     if(EEPROM->AUTOPROG)    EEPROM->AUTOPROG = 2;           //设置自动编程
     EEPROM->INTSTATCLR = EEPROM_INTENSET_PROG_SET_EN_MASK;  //清除标志位
-    addr = (uint32 *)(EEPROM_BASE_ADDRESS + pagenum * EEPROM_PAGE_SIZE);//计算地址
+    addr = (uint32 *)(EEPROM_BASE_ADDRESS + pageNumber * EEPROM_PAGE_SIZE);//计算地址
     for(i=0;i<EEPROM_PAGE_SIZE/4;i++)
     {
         addr[i] = data[i];                                  //写入数据
