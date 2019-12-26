@@ -118,7 +118,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>^</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -157,7 +156,7 @@
           <Type>0</Type>
           <LineNumber>59</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3272</Address>
+          <Address>3248</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -168,33 +167,32 @@
           <ExecCommand></ExecCommand>
           <Expression>\\LPC546XX\Chip/src/assert.c\59</Expression>
         </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>36</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>4294</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>E:\Study\1--Cortex-M\LPC546XX\LPC_MDK\0-绀轰緥宸ョ▼\Chip\src\LPC546XX_mrt.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\LPC546XX\Chip/src/LPC546XX_mrt.c\36</Expression>
-        </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>test,0x0A</ItemText>
+          <ItemText>main_clk_mhz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>speed,0x0A</ItemText>
+          <ItemText>time</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>times1</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>times2</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>times1 - times2</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

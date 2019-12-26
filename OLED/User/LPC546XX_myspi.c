@@ -16,7 +16,7 @@
 //----------------------------------------------------------------------
 void SPI_InitHardware(SPIN_enum spi, SPI_PIN_enum sdaPin, SPI_PIN_enum sclPin, uint32 baud)
 {
-	spi_init(spi, SPI_CS_NOT_USE, sclPin, sdaPin, SPI_MISO_NOT_USE, 1, flexcomm_get_clk(FLEXCOMM_0));
+	spi_init(spi, SPI_CS_NOT_USE, sclPin, sdaPin, SPI_MISO_NOT_USE, 0, flexcomm_get_clk(FLEXCOMM_0));
 }
 
 //----------------------------------------------------------------------
@@ -28,7 +28,13 @@ void SPI_InitHardware(SPIN_enum spi, SPI_PIN_enum sdaPin, SPI_PIN_enum sclPin, u
 //----------------------------------------------------------------------
 void SPI_SendDataHardware(SPIN_enum spi, uint8 data)
 {
-	spi_mosi(spi, SPI_CS_NOT_USE, &data, NULL, 1, 1);
+	//spi_mosi(spi, SPI_CS_NOT_USE, &data, NULL, 1, 1); //库函数版本,若寄存器版本程序出现问题,则调用该函数比较稳妥
+	
+	//寄存器版本的发送程序,发送速度更快,但是不一定能用
+	while(!(SPIN[spi]->FIFOSTAT & SPI_FIFOSTAT_TXEMPTY_MASK));                        //等到发送缓冲为空
+    SPIN[spi]->FIFOWR = SPI_FIFOWR_TXDATA(data) | SPI_FIFOWR_EOT_MASK | SPI_FIFOWR_LEN(7); //发送数据   
+    //while(!(SPIN[spi]->FIFOSTAT & SPI_FIFOSTAT_RXNOTEMPTY_MASK));                     //等待接收缓冲不为空
+    SPIN[spi]->FIFORD;
 }
 
 //----------------------------------------------------------------------

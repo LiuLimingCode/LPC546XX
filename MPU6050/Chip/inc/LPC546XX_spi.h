@@ -23,6 +23,8 @@
 
 #include "common.h"
 
+extern SPI_Type* SPIN[];
+
 //此枚举定义不允许用户修改
 typedef enum
 {

@@ -13,7 +13,7 @@ void MRT0_DriverIRQHandler(void)
 
 int main(void)
 {
-	int32 times1,times2,time,delay;
+	int32 times1, times2, time;
 	DisableInterrupts;
 	get_clk();//获取时钟频率  务必保留
 	
@@ -29,10 +29,7 @@ int main(void)
 		if(Pit_flag == 1)
 		{
 			Pit_flag = 0;
-			delay = 0;
 			times1 = MRT0->CHANNEL[MRT_CH0].TIMER;
-			if(MRT0->CHANNEL[MRT_CH0].TIMER & MRT_CHANNEL_INTVAL_IVALUE_MASK)
-				delay += 1;
 			
 			OLED_P6x8Int(0, 0, 121, 3);
 			OLED_P6x8Int(0, 1, 12, 3);
@@ -49,10 +46,8 @@ int main(void)
 			OLED_P6x8Int(64, 5, -21, 2);
 			OLED_P6x8Int(64, 6, -123, 2);
 			times2 = MRT0->CHANNEL[MRT_CH0].TIMER;
-			if(MRT0->CHANNEL[MRT_CH0].TIMER & MRT_CHANNEL_INTVAL_IVALUE_MASK)
-				delay += 1;
 			time = times1 - times2;
-			OLED_P6x8Flo(0, 7, (float)time/(100000 * main_clk_mhz) * 100, 2);
+			OLED_P6x8Flo(0, 7, (float)time/(1000 * main_clk_mhz), 2);
 			OLED_P6x8Str(64, 7, "ms");
 		}
 	}

@@ -44,9 +44,9 @@
 #define OLED_SDA_Pin   A5  //D1
 #define OLED_SCL_Pin   B15  //D0
 #else                       //使用硬件SPI,在这个情况下可以不定OLED_SDA_Pin和OLED_SCL_Pin
-#define OLED_SPI       SPI_0
-#define OLED_SDA_Pin   SPI0_MOSI_A24 //D1
-#define OLED_SCL_Pin   SPI0_SCK_A28  //D0
+#define OLED_SPI       SPI_4
+#define OLED_SDA_Pin   SPI4_MOSI_A5 //D1
+#define OLED_SCL_Pin   SPI4_SCK_A4  //D0
 #endif
 
 /****************** 可调用函数 ******************/
