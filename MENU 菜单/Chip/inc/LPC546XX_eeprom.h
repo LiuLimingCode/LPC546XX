@@ -24,10 +24,10 @@
 #include "common.h"
 
 #define EEPROM_BASE_ADDRESS         (0x40108000)                    //EEPROM 基地址
-#define EEPROM_SIZE                 (0x00004000)                    //EEPROM 大小
+#define EEPROM_SIZE                 (0x00004000)                    //EEPROM 字节大小(8位)
 #define EEPROM_PAGE_COUNT           (128)                           //EEPROM 页数
-#define EEPROM_PAGE_SIZE            (EEPROM_SIZE/EEPROM_PAGE_COUNT) //EEPROM 页大小
-#define EEPROM_OFFSET_MAX           (EEPROM_SIZE/4)            		//EEPROM 偏差最大值
+#define EEPROM_PAGE_SIZE            (EEPROM_SIZE/EEPROM_PAGE_COUNT) //EEPROM 页字节大小(8位)
+#define EEPROM_OFFSET_MAX           (EEPROM_SIZE/4)            		//EEPROM 偏差字最大值(32位)
 #define EEPROM_PROGRAM_CMD          (6)                             //EEPROM 命令
 #define EEPROM_INTERNAL_FREQ        (1500000)                       //EEPROM 频率
 
@@ -35,30 +35,18 @@
 
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM读取一个字(4个字节)
-//  @param      type        写入EEPROM的页 一页可写32个uint32类型数据
-//  @param      offset      需要写入的数据的偏移字(32位)
+//  @param      pageNumber   写入EEPROM的页 一页可写32个uint32类型数据
+//  @param      offset       写入EEPROM的地址偏移字(32位)
+//  @param      tpye         读取数据的类型
 //  @return     读取的内容
-//  Sample usage:            uint32 test = EEPROM_READ_WORD(uint32,0);  读取偏移0  类型为uint32
+//  Sample usage:            uint32 test = EEPROM_READ_WORD(0, 0, uint32);  读取偏移0  类型为uint32
 //  @note                    
 //-------------------------------------------------------------------------------------------------------------------
-#define eeprom_read_word(pageNumber, offset, type)     (*(type *)((uint32)((EEPROM_BASE_ADDRESS + ((offset<EEPROM_OFFSET_MAX?offset:0)*4)+pageNumber*EEPROM_PAGE_SIZE))))
-
-//-------------------------------------------------------------------------------------------------------------------
-//  @brief      EEPROM读取数据
-//  @param      SectorNum   数据所在的EEPROM页数
-//  @param      type        写入EEPROM的页 一页可写32个uint32类型数据
-//  @param      offset      该数据在当前页数的偏移字节数(8位)
-//  @return     读取的内容
-//  Sample usage:            int16 test = eeprom_read(0, 0, int16);  读取偏移0  类型int16
-//  @note                    by @llm
-//-------------------------------------------------------------------------------------------------------------------
-#define eeprom_read(sectorNum, offset, type)        (*(type *)(EEPROM_BASE_ADDRESS + sectorNum * EEPROM_PAGE_SIZE + offset))
+#define eeprom_read_word(pageNumber, offset, type)     (*(type *)((uint32)((EEPROM_BASE_ADDRESS + ((offset<EEPROM_OFFSET_MAX?offset:0)*4) + pageNumber*EEPROM_PAGE_SIZE))))
 
 void eeprom_init(void);
 void eeprom_write_word(uint16 pageNumber, int16 offset, uint32 data);
 void eeprom_write_page(uint16 pagenum, uint32 *data);
-
-
 
 
 #endif

@@ -1,7 +1,7 @@
 #include "headfile.h"
 
 int16 int16_1 = 10, int16_2 = 12, int16_3 = 20, int16_4 = 30, int16_5 = 40;
-float float_1 = 2.1, float_2 = -2.1, float_3 = 23.2, float_4 = 44.1, float_5 = 11.1;
+float float_1 = 2.1, float_2 = -2.1, float_3 = 99.9, float_4 = 44.1, float_5 = 11.1;
 uint8 uint8_1 = 2, uint8_2 = 3, uint8_3 = 4, uint8_4 = 3, uint8_5 = 6;
 
 #define KC			MENU_BUTTON_CONFIRM
@@ -39,7 +39,6 @@ int main(void)
 	menu[0].VariableAddr[3] = &float_1;
 	menu[0].VariableName[3] = "float_1";
 	menu[0].VariableType[3] = VariableType_Float;
-	
 	
 	menu[1].UintTitle = "02";
 	menu[1].VariableAddr[0] = &int16_2;

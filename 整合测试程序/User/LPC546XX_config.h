@@ -103,6 +103,8 @@
 #define AD_CH_R__               ADC_CH4_A16  
 #define AD_CH_R_1				ADC_CH0_A10
   
+#define SET_MCP41_SDA_PIN       A20
+#define SET_MCP41_SCL_PIN       A21
 
 #define SET_MCP41_CS0           B23  
 #define SET_MCP41_CS1           B22

@@ -156,7 +156,7 @@ void EEPROM_InitMCP41(void)
 {
 	for(int8 temp = 0; temp < 8; temp++)
 	{
-		MCP41_EEPROM_Save[temp] = eeprom_read_word(FLASH_SAVE_MCP41,temp, int8);
+		MCP41_EEPROM_Save[temp] = eeprom_read_word(FLASH_SAVE_MCP41, temp, uint8);
 	}
 	for(int8 temp = 0; temp < ADC_NUM; temp++)
 	{

@@ -59,16 +59,18 @@ void eeprom_init(void)
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM写入一个字(4个字节)
 //  @param      pageNumber   写入EEPROM的页 一页可写32个uint32类型数据
-//  @param      offset       写入EEPROM的地址偏移字节
-//  @param      *data        需要写入数据地址
+//  @param      offset       写入EEPROM的地址偏移字(32位)
+//  @param      data         需要写入数据
 //  @return     void
-//  Sample usage:            eeprom_write_word(0, 0,12345); 数据12345写入到偏移量为0的EEPROM区域
+//  Sample usage:            eeprom_write_word(0, 0, 12345); 数据12345写入到偏移量为0的EEPROM区域
 //-------------------------------------------------------------------------------------------------------------------
 void eeprom_write_word(uint16 pageNumber, int16 offset, uint32 data)
 {
     uint32 *addr;
 
-    if (offset >= EEPROM_OFFSET_MAX)    ASSERT(0);
+	if (pageNumber >= EEPROM_PAGE_COUNT)    ASSERT(0);
+    if (offset >= EEPROM_PAGE_SIZE/4)    ASSERT(0);
+	
     if(EEPROM->AUTOPROG)    EEPROM->AUTOPROG = 1;           //设置自动编程
     EEPROM->INTSTATCLR = EEPROM_INTENSET_PROG_SET_EN_MASK;  //清除标志位
     addr = (uint32 *)(EEPROM_BASE_ADDRESS + pageNumber * EEPROM_PAGE_SIZE + offset * 4);//计算地址
@@ -82,7 +84,7 @@ void eeprom_write_word(uint16 pageNumber, int16 offset, uint32 data)
 
 //-------------------------------------------------------------------------------------------------------------------
 //  @brief      EEPROM写入一个字(4个字节)
-//  @param      pageNumber      写入EEPROM的页 一页可写32个uint32类型数据
+//  @param      pageNumber   写入EEPROM的页 一页可写32个uint32类型数据
 //  @param      *data        需要写入的数据的地址 
 //  @return     void
 //  Sample usage:            uint32 dat[32];  eeprom_write_page(0,dat); 将dat数组的内容全部写入EEPROM的第0页
