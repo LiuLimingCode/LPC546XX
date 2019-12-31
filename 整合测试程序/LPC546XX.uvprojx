@@ -400,6 +400,11 @@
               <FilePath>.\Chip\inc\headfile.h</FilePath>
             </File>
             <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\menu.c</FilePath>
+            </File>
+            <File>
               <FileName>ImageProcess.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\ImageProcess.c</FilePath>
@@ -468,11 +473,6 @@
               <FileName>LPC546XX_oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Board\LPC546XX_oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>menu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Board\menu.c</FilePath>
             </File>
             <File>
               <FileName>SEEKFREE_MT9V032.c</FileName>
