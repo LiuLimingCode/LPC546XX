@@ -349,7 +349,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Chip\inc\headfile.h</PathWithFileName>
+      <PathWithFileName>.\User\headfile.h</PathWithFileName>
       <FilenameWithoutPath>headfile.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
