@@ -28,13 +28,13 @@
 #define MENU_STORE_NUM          (MENU_STORAGE_SIZE/MENU_STORE_BIT)       //菜单的变量压缩后在存储器中存储的数量
 
 /****************** 引脚选择 ******************/
-#define MENU_BUTTON_UP          Button_Up          //上按键
-#define MENU_BUTTON_DOWN        Button_Down        //下按键
-#define MENU_BUTTON_LEFT        Button_Left        //左按键
-#define MENU_BUTTON_RIGHT       Button_Right       //右按键
-#define MENU_BUTTON_CONFIRM     Button_Mid         //确认按键
+#define MENU_BUTTON_UP          B13         //上按键
+#define MENU_BUTTON_DOWN        B26         //下按键
+#define MENU_BUTTON_LEFT        B12         //左按键
+#define MENU_BUTTON_RIGHT       B28         //右按键
+#define MENU_BUTTON_CONFIRM     B27         //确认按键
 #if MENU_ENABLE_BUZZER
-#define MENU_BUZZER             Beep          //蜂鸣器,若MENU_ENABLE_BUZZER为0,可以不设置
+#define MENU_BUZZER             D0          //蜂鸣器,若MENU_ENABLE_BUZZER为0,可以不设置
 #endif
 
 //------------------------------------------------------------------------------------
@@ -73,5 +73,39 @@ typedef Menu_Unit Menu[MENU_UNITS_NUM]; //用户用Menu定义自己的菜单结构体,语法: M
 
 void Menu_Init(Menu menu); //在调用该函数前,请确保外部资源(GPIO,外部存储器,外部显示器)的初始化
 uint8 Menu_Work(void); //建议每隔200ms执行一次该函数,如:while(!Menu_Work()) systick_delay_ms(200);
+
+/***************************************
+//菜单函数调用示范
+
+//假定需要菜单控制的变量
+int16 int16_1 = 0, int16_2 = 0;
+uint8 uint8_1 = 0;
+float float_1 = 0;
+
+void Menu(void)
+{
+	Menu menu = {0}; //声明菜单结构体变量
+	
+	//设置菜单结构体
+	menu[0].UintTitle = "UintName";               //菜单的名字
+	menu[0].VariableAddr[0] = &int16_1;           //变量的地址
+	menu[0].VariableName[0] = "int16_1";          //变量的显示名字
+	menu[0].VariableType[0] = VariableType_Int16; //变量的类型,注意,如果类型选择错误会死机
+	menu[0].VariableAddr[1] = &uint8_1;
+	menu[0].VariableName[1] = "uint8_1";
+	menu[0].VariableType[1] = VariableType_Uint8;
+	menu[0].VariableAddr[2] = &int16_2;
+	menu[0].VariableName[2] = "int16_2";
+	menu[0].VariableType[2] = VariableType_Int16;
+	menu[0].VariableAddr[3] = &float_1;
+	menu[0].VariableName[3] = "float_1";
+	menu[0].VariableType[3] = VariableType_Float;
+	//menu数组范围是0~(MENU_UNITS_NUM-1);menu[].VariableXxxx数组的选择范围是0~(MENU_UNIT_VARIABLES_NUM-1)
+	//菜单最多可以控制的变量数见宏定义MENU_VARIABLES_NUM
+	
+	Menu_Init(menu);                              //初始化菜单,在调用该函数前,请确保外部资源(GPIO,外部存储器,外部显示器)的初始化
+	while(!Menu_Work()) systick_delay_ms(200);    //菜单每200ms工作一次，并根据是否按下“关闭菜单”选项后（函数返回0）结束死循环
+}
+***************************************/
 
 #endif
